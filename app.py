@@ -332,6 +332,9 @@ CUSTOM_CSS = """
 :root {
     --nsbe-black: #1a1a1a;
     --nsbe-gold: #c9a227;
+    --usf-green: #00543c;
+    --usf-green-light: #0a6b4f;
+    --usf-gold: #fdbb30;
     --nsbe-gray: #6b7280;
     --nsbe-light-gray: #f4f4f5;
 }
@@ -341,30 +344,58 @@ CUSTOM_CSS = """
 }
 
 .hero-section {
-    background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
+    background: linear-gradient(135deg, #00543c 0%, #1a1a1a 65%);
     color: #ffffff;
-    padding: 40px 32px;
+    padding: 40px 32px 32px 32px;
     border-radius: 16px;
     margin-bottom: 24px;
     text-align: center;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 4px solid #fdbb30;
+}
+
+.hero-eyebrow {
+    display: inline-block;
+    background: rgba(253, 187, 48, 0.15);
+    border: 1px solid rgba(253, 187, 48, 0.5);
+    color: #fdbb30;
+    font-size: 0.75em;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 4px 12px;
+    border-radius: 999px;
+    margin-bottom: 14px;
 }
 
 .hero-section h1 {
-    color: #c9a227;
-    font-size: 2.4em;
-    margin-bottom: 8px;
-    letter-spacing: 0.5px;
+    color: #ffffff;
+    font-size: 2.5em;
+    margin: 4px 0 8px 0;
+    letter-spacing: 0.3px;
+}
+
+.hero-section h1 .accent {
+    color: #fdbb30;
 }
 
 .hero-section p {
-    color: #e5e5e5;
-    font-size: 1.1em;
-    max-width: 700px;
+    color: #e8ede9;
+    font-size: 1.08em;
+    max-width: 680px;
     margin: 6px auto;
 }
 
+.hero-tagline {
+    font-style: italic;
+    color: #b7cbc0 !important;
+    font-size: 0.95em !important;
+    margin-top: 14px !important;
+}
+
 .section-heading {
-    border-left: 5px solid #c9a227;
+    border-left: 5px solid #00543c;
     padding-left: 14px;
     margin: 20px 0 12px 0;
 }
@@ -372,6 +403,12 @@ CUSTOM_CSS = """
 .section-heading h2 {
     margin: 0;
     color: #1a1a1a;
+}
+
+.section-heading .subtext {
+    color: #6b7280;
+    font-size: 0.9em;
+    margin-top: 2px;
 }
 
 .card-grid {
@@ -384,11 +421,18 @@ CUSTOM_CSS = """
 .opp-card {
     background: #ffffff;
     border: 1px solid #e5e5e5;
+    border-top: 3px solid #fdbb30;
     border-radius: 14px;
     padding: 20px;
     box-shadow: 0 1px 4px rgba(0,0,0,0.06);
     display: flex;
     flex-direction: column;
+    transition: box-shadow 0.15s ease, transform 0.15s ease;
+}
+
+.opp-card:hover {
+    box-shadow: 0 6px 16px rgba(0,84,60,0.12);
+    transform: translateY(-2px);
 }
 
 .opp-card-header {
@@ -399,8 +443,8 @@ CUSTOM_CSS = """
 }
 
 .opp-type-badge {
-    background: #c9a227;
-    color: #1a1a1a;
+    background: #00543c;
+    color: #ffffff;
     font-weight: 600;
     font-size: 0.78em;
     padding: 4px 10px;
@@ -466,9 +510,9 @@ CUSTOM_CSS = """
 }
 
 .chip-tag {
-    background: #fdf6e3;
-    border-color: #ecdca8;
-    color: #7a5c00;
+    background: #eaf3ef;
+    border-color: #b9d8ca;
+    color: #00543c;
 }
 
 .apply-button {
@@ -481,11 +525,26 @@ CUSTOM_CSS = """
     border-radius: 8px;
     text-decoration: none;
     margin-top: auto;
+    transition: background 0.15s ease;
 }
 
 .apply-button:hover {
-    background: #c9a227;
+    background: #fdbb30;
     color: #1a1a1a !important;
+}
+
+.builder-note {
+    background: linear-gradient(135deg, #f4faf7 0%, #fdf9ef 100%);
+    border: 1px solid #d9ece2;
+    border-left: 4px solid #00543c;
+    border-radius: 12px;
+    padding: 18px 22px;
+    margin-top: 16px;
+    color: #1a1a1a;
+}
+
+.builder-note strong {
+    color: #00543c;
 }
 
 .empty-state {
@@ -513,10 +572,11 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
 
     gr.HTML("""
     <div class="hero-section">
-        <h1>NSBE Opportunity Hub</h1>
-        <p>A centralized place to discover internships, scholarships, fellowships, conferences,
-        research programs, and professional development opportunities.</p>
-        <p>Created for University of San Francisco NSBE members.</p>
+        <span class="hero-eyebrow">USF &middot; NSBE</span>
+        <h1>NSBE <span class="accent">Opportunity Hub</span></h1>
+        <p>One place to find internships, scholarships, fellowships, conferences, research
+        programs, and professional development &mdash; instead of five different apps.</p>
+        <p class="hero-tagline">Built by a USF NSBE member, for USF NSBE members.</p>
     </div>
     """)
 
@@ -524,7 +584,12 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
 
         # --- Search & Browse Tab -------------------------------------------------
         with gr.Tab("Browse Opportunities"):
-            gr.HTML('<div class="section-heading"><h2>Search &amp; Filter</h2></div>')
+            gr.HTML("""
+            <div class="section-heading">
+                <h2>Search &amp; Filter</h2>
+                <p class="subtext">Type a keyword, stack a few filters, or both &mdash; it all works together.</p>
+            </div>
+            """)
 
             with gr.Row():
                 search_box = gr.Textbox(
@@ -579,10 +644,13 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
         # --- Recommendations Tab --------------------------------------------------
         with gr.Tab("Find Opportunities for Me"):
             gr.HTML("""
-            <div class="section-heading"><h2>Find Opportunities for Me</h2></div>
-            <p>Select your class year, main area of interest, and preferred location type below.
-            Recommendations are based only on the preferences you select here — no AI or external
-            data is used to generate them.</p>
+            <div class="section-heading">
+                <h2>Find Opportunities for Me</h2>
+                <p class="subtext">Three quick picks, and we'll narrow the list down for you.</p>
+            </div>
+            <p>Set your class year, main area of interest, and preferred location type below.
+            This is straightforward rule-based matching against your picks &mdash; no AI, no
+            external data, nothing mysterious happening behind the scenes.</p>
             """)
 
             with gr.Row():
@@ -605,6 +673,19 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
 
         # --- About Tab --------------------------------------------------------
         with gr.Tab("About"):
+            gr.HTML("""
+            <div class="builder-note">
+                <strong>Why I built this &mdash; Manal Faisal</strong>
+                <p style="margin: 8px 0 0 0;">
+                As a USF NSBE member, I kept missing opportunities because they lived in five
+                different places &mdash; a LinkedIn post here, a Slack message there, an email I
+                forgot to open. This started as a way to fix that for myself, and I figured other
+                members were probably running into the same thing. It's still an early version,
+                so if you spot something missing or broken, let a chapter officer know.
+                </p>
+            </div>
+            """)
+
             gr.HTML("""
             <div class="section-heading"><h2>About This Project</h2></div>
             <p><strong>The Problem:</strong> NSBE members often miss out on internships, scholarships,
@@ -646,7 +727,7 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
 
     gr.HTML("""
     <p style="text-align:center; color:#6b7280; font-size:0.85em; margin-top:24px;">
-        NSBE Opportunity Hub &middot; Built as an MVP technical leadership project &middot;
+        NSBE Opportunity Hub &middot; Built by Manal Faisal for USF NSBE &middot;
         Not officially affiliated with the national NSBE organization
     </p>
     """)
