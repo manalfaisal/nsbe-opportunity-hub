@@ -635,7 +635,7 @@ with gr.Blocks(css=CUSTOM_CSS, title="NSBE Opportunity Hub", theme=gr.themes.Sof
         with gr.Tab("About"):
             gr.HTML("""
             <div class="builder-note">
-                <strong>Why I built this &mdash; Manal Faisal</strong>
+                <strong>Why I built this &mdash; Manal Faisal, 2026-2027 USF NSBE President</strong>
                 <p style="margin: 8px 0 0 0;">
                 As a USF NSBE member, I kept missing opportunities because they lived in five
                 different places &mdash; a LinkedIn post here, a Slack message there, an email I
